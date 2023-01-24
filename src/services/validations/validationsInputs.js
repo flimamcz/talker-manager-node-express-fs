@@ -12,7 +12,12 @@ const validateId = async (id) => {
 const validateProduct = (product) => {
   const { error } = productSchema.validate(product);
 
-  if (error) return { type: 'INVALID_VALUE', message: 'Name must be a min 3 characters' };
+  if (error) {
+ return {
+    type: 'INVALID_VALUE',
+    message: '"name" length must be at least 5 characters long',
+  }; 
+}
 
   return { type: null, message: '' };
 };
