@@ -20,7 +20,6 @@ const createProduct = async (product) => {
 
   const insertId = await productsModel.createProduct(product);
   const addedProduct = await productsModel.getProductById(insertId);
-  console.log(addedProduct);
   return { type: null, message: addedProduct };
 };
 
