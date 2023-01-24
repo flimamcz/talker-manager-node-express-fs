@@ -1,5 +1,5 @@
 const { productsModel } = require('../../models');
-const { idSchema } = require('./schema');
+const { idSchema, productSchema } = require('./schema');
 
 const validateId = async (id) => {
   const { error } = idSchema.validate(id);
@@ -9,6 +9,15 @@ const validateId = async (id) => {
   return { type: null, message: '' };
 };
 
+const validateProduct = (product) => {
+  const { error } = productSchema.validate(product);
+
+  if (error) return { type: 'INVALID_VALUE', message: 'Name must be a min 3 characters' };
+
+  return { type: null, message: '' };
+};
+
 module.exports = {
   validateId,
+  validateProduct,
 };
