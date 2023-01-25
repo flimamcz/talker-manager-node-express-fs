@@ -29,8 +29,14 @@ const validateIdSales = async (saleId) => {
   return { type: null, message: '' };
 };
 
+const validateUpdateProduct = async (id) => {
+  const searchProduct = await productsModel.getProductById(id);
+  if (searchProduct === undefined) return { type: 'NOT_FOUND', message: 'Product not found' };
+  return { type: null, message: '' };
+};
 module.exports = {
   validateId,
   validateProduct,
   validateIdSales,
+  validateUpdateProduct,
 };
