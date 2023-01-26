@@ -29,14 +29,17 @@ const validateIdSales = async (saleId) => {
   return { type: null, message: '' };
 };
 
-const validateUpdateProduct = async (id) => {
+const validateSearchProduct = async (id) => {
+  const { error } = idSchema.validate(id);
+  if (error) return { type: 'INVALID_VALUE', message: 'Id must be a number' };
   const searchProduct = await productsModel.getProductById(id);
   if (searchProduct === undefined) return { type: 'NOT_FOUND', message: 'Product not found' };
   return { type: null, message: '' };
 };
+
 module.exports = {
   validateId,
   validateProduct,
   validateIdSales,
-  validateUpdateProduct,
+  validateSearchProduct,
 };

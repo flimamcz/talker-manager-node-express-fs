@@ -1,6 +1,6 @@
 const { productsModel } = require('../models');
 const { validateId, validateProduct,
-  validateUpdateProduct } = require('./validations/validationsInputs');
+  validateSearchProduct } = require('./validations/validationsInputs');
 
 const getAllProducts = async () => {
   const products = await productsModel.getAllProducts();
@@ -29,16 +29,25 @@ const updateProduct = async (id, product) => {
   if (error.type) return error;
   error = validateProduct(product);
   if (error.type) return error;
-  error = await validateUpdateProduct(id);
+  error = await validateSearchProduct(id);
   if (error.type) return error;
 
   const updated = await productsModel.updateProduct(id, product);
   return { type: null, message: updated };
 };
 
+const deleteProduct = async (id) => {
+  const search = await productsModel.getProductById(id);
+  console.log(search);
+  if (search === undefined) return { type: 'NOT_FOUND', message: 'Product not found' };
+  await productsModel.deleteProduct(id);
+  return { type: null, message: true };
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   createProduct,
+  deleteProduct,
   updateProduct,
 };
